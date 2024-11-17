@@ -1,0 +1,14 @@
+{
+  "name": "urerued/urerued-token",
+  "description": "A simple token manager for Laravel",
+  "type": "library",
+  "autoload": {
+      "psr-4": {
+          "Urerued\\UreruedToken\\": "src/"
+      }
+  },
+  "require": {
+      "php": ">=7.2",
+      "illuminate/support": "^11.0"
+  }
+}
