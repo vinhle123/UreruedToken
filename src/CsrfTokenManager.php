@@ -1,8 +1,7 @@
 <?php
 
 namespace Urerued\UreruedToken;
-use Illuminate\Encryption\Encrypter;
-use Illuminate\Session\Store;
+use Illuminate\Support\Str;
 
 class CsrfTokenManager
 {
@@ -17,7 +16,8 @@ class CsrfTokenManager
         }
 
         // Generate a new random token for each request
-        $token = bin2hex(random_bytes(32));
+        //$token = bin2hex(random_bytes(32));
+        $token = Str::random(64);
 
         // Store it in the session to validate it later
         $_SESSION['_csrf_token'] = $token;
