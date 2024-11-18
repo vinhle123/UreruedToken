@@ -1,35 +1,26 @@
 <?php
 
 namespace Urerued\UreruedToken;
-
 use Illuminate\Encryption\Encrypter;
 use Illuminate\Session\Store;
 
 class CsrfTokenManager
 {
-    protected $session;
-    protected $encrypter;
-
-    public function __construct(Store $session, Encrypter $encrypter)
-    {
-        $this->session = $session;
-        $this->encrypter = $encrypter;
-    }
-
     /**
-     * Generate a CSRF token and store it in session.
+     * Generate a CSRF token for the session (each request).
      * @return string The generated token.
      */
     public function generateToken()
     {
-        // Create a random token
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Generate a new random token for each request
         $token = bin2hex(random_bytes(32));
 
-        // Encrypt the token for added security
-        $encryptedToken = $this->encrypter->encrypt($token);
-
-        // Store the encrypted token in session
-        $this->session->put('_csrf_token', $encryptedToken);
+        // Store it in the session to validate it later
+        $_SESSION['_csrf_token'] = $token;
 
         return $token;
     }
@@ -41,20 +32,12 @@ class CsrfTokenManager
      */
     public function validateToken($token)
     {
-        // Get the encrypted token from session
-        $sessionToken = $this->session->get('_csrf_token');
-
-        if (!$sessionToken) {
-            return false;
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
         }
 
-        // Decrypt the token from session and compare with the input token
-        try {
-            $decryptedToken = $this->encrypter->decrypt($sessionToken);
-            return hash_equals($decryptedToken, $token);
-        } catch (\Exception $e) {
-            return false;
-        }
+        // Check if the token matches the session token
+        return isset($_SESSION['_csrf_token']) && hash_equals($_SESSION['_csrf_token'], $token);
     }
 
     /**

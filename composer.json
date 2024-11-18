@@ -12,8 +12,6 @@
       }
   },
   "require": {
-      "php": ">=7.2",
-      "illuminate/session": "^7.0",
-      "illuminate/encryption": "^7.0"
+      "php": ">=7.2"
   }
 }
