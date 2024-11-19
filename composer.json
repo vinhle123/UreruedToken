@@ -2,6 +2,7 @@
   "name": "urerued/urerued-token",
   "description": "A simple token manager for Laravel",
   "type": "library",
+  "version": "1.0.0",
   "config": {
     "minimum-stability": "dev",
     "prefer-stable": true
