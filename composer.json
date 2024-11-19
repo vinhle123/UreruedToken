@@ -3,17 +3,18 @@
   "description": "A simple token manager for Laravel",
   "type": "library",
   "version": "1.0.0",
+  "license": "MIT",
   "config": {
     "minimum-stability": "dev",
     "prefer-stable": true
   },
   "autoload": {
-      "psr-4": {
-          "Urerued\\UreruedToken\\": "src/"
-      }
+    "psr-4": {
+      "Urerued\\UreruedToken\\": "src/"
+    }
   },
   "require": {
-      "php": ">=7.2",
-      "illuminate/support": "^7.0"
+    "php": ">=7.2",
+    "illuminate/support": "^7.0"
   }
 }
